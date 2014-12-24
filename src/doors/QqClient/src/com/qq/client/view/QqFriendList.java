@@ -13,6 +13,10 @@ import java.awt.event.*;
 public class QqFriendList extends JFrame implements ActionListener,MouseListener{
 
 	//处理第一张卡片.
+	JPanel js;
+	JLabel js_l;
+	JTextField js_jtf;
+	JButton js_jb;
 	
 	JPanel jphy1,jphy2,jphy3;
 	JButton jphy_jb1,jphy_jb2,jphy_jb3;
@@ -28,7 +32,7 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 	CardLayout cl;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-	//	QqFriendList qqFriendList=new QqFriendList();
+		QqFriendList qqFriendList=new QqFriendList("lj");
 	}
 	
 	//更新在线的好友情况
@@ -46,11 +50,22 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 	public QqFriendList(String ownerId)
 	{
 		this.owner=ownerId;
+		//搜索栏
+		js = new JPanel(new GridLayout(1,4));
+		js_l = new JLabel("搜索/添加");
+		js_jtf = new JTextField();
+		js_jb = new JButton("确定");
+		js.add(js_l);
+		js.add(js_jtf);
+		js.add(js_jb);
+		
+		
 		//处理第一张卡片(显示好友列表)
 		jphy_jb1=new JButton("我的好友");
 		jphy_jb2=new JButton("陌生人");
 		jphy_jb2.addActionListener(this);
-		jphy_jb3=new JButton("黑名单");
+		jphy_jb3=new JButton("搜索/添加");
+		jphy_jb3.addActionListener(this);
 		jphy1=new JPanel(new BorderLayout());
 		//假定有50个好友
 		jphy2=new JPanel(new GridLayout(50,1,4,4));
@@ -93,7 +108,7 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 		jpmsr_jb1=new JButton("我的好友");
 		jpmsr_jb1.addActionListener(this);
 		jpmsr_jb2=new JButton("陌生人");
-		jpmsr_jb3=new JButton("黑名单");
+		jpmsr_jb3=new JButton("搜索/添加");
 		jpmsr1=new JPanel(new BorderLayout());
 		//假定有20个陌生人
 		jpmsr2=new JPanel(new GridLayout(20,1,4,4));
@@ -124,8 +139,9 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 		
 		cl=new CardLayout();
 		this.setLayout(cl);
-		this.add(jphy1,"1");
+		this.add(jphy1,"1"); 
 		this.add(jpmsr1,"2");
+		this.add(js,"3");
 		//在窗口显示自己的编号.
 		this.setTitle(ownerId);
 		this.setSize(140, 400);
@@ -140,8 +156,13 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 		if(arg0.getSource()==jphy_jb2)
 		{
 			cl.show(this.getContentPane(), "2");
-		}else if(arg0.getSource()==jpmsr_jb1){
+		}
+		if(arg0.getSource()==jpmsr_jb1){
 			cl.show(this.getContentPane(), "1");
+		}
+		if(arg0.getSource()==jphy_jb3)
+		{
+			cl.show(this.getContentPane(), "3");
 		}
 	}
 
