@@ -17,7 +17,6 @@ public class QqClientLogin extends JFrame implements ActionListener{
 	//定义北部需要的组件
 	
 	JLabel jbl1;
-	
 	//定义中部需要的组件
 	
 	JTabbedPane jtp;//.中部有三个JPanel,有一个叫选项卡窗口管理
@@ -44,14 +43,14 @@ public class QqClientLogin extends JFrame implements ActionListener{
 	public QqClientLogin()
 	{
 		//处理北部
-		jbl1=new JLabel(new ImageIcon("image/tou.gif"));
+		jbl1=new JLabel(new ImageIcon("image/tou.jpg"));
 		
 	
 		//处理中部
 		jp2=new JPanel(new GridLayout(3,3));//3X3
 		
-		jp2_jbl1=new JLabel("QQ号码",JLabel.CENTER);
-		jp2_jbl2=new JLabel("QQ密码",JLabel.CENTER);
+		jp2_jbl1=new JLabel("Doors号码",JLabel.CENTER);
+		jp2_jbl2=new JLabel("Doors密码",JLabel.CENTER);
 		jp2_jbl3=new JLabel("忘记密码",JLabel.CENTER);
 		jp2_jbl3.setForeground(Color.blue);//设置颜色
 		jp2_jbl4=new JLabel("申请密码保护",JLabel.CENTER);
@@ -75,7 +74,7 @@ public class QqClientLogin extends JFrame implements ActionListener{
 		jp2.add(jp2_jbl4);
 		//创建选项卡窗口
 		jtp=new JTabbedPane();//将3个选项卡加入
-		jtp.add("QQ号码",jp2);
+		jtp.add("Doors号码",jp2);
 		jp3= new JPanel();
 		jtp.add("手机号码",jp3);
 		jp4=new JPanel();
@@ -117,19 +116,20 @@ public class QqClientLogin extends JFrame implements ActionListener{
 			
 			if(qqClientUser.checkUser(u))
 			{
+				JOptionPane.showMessageDialog(this,"登录成功");//登录成功会弹出
 				try {
-					//把创建好友列表的语句提前.
+					//把创建好友列表的语句提前.qqlist为提前做好的好友列表
 					QqFriendList qqList=new QqFriendList(u.getUserId());
 					ManageQqFriendList.addQqFriendList(u.getUserId(), qqList);
 					
-					//发送一个要求返回在线好友的请求包.
+					//发送一个要求返回在线好友的请求包.序列流，通过U的ID得到线程名，并得到其IO流
 					ObjectOutputStream oos=new ObjectOutputStream
 					(ManageClientConServerThread.getClientConServerThread(u.getUserId()).getS().getOutputStream());
-					
-					//做一个Message
+					//现在IO流归U
+					//做一个Message，请求在线好友
 					Message m=new Message();
 					m.setMesType(MessageType.message_get_onLineFriend);
-					//指明我要的是这个qq号的好友情况.
+                  // 指明我要的是这个qq号的好友情况.，但是这个Message m是谁接收到呢???????
 					m.setSender(u.getUserId());
 					oos.writeObject(m);
 				} catch (Exception e) {

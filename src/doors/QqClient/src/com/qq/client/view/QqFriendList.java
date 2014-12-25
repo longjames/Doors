@@ -47,7 +47,7 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 		}
 	}
 	
-	public QqFriendList(String ownerId)
+	public QqFriendList(String ownerId)//用户为ID的在线好友
 	{
 		this.owner=ownerId;
 		//搜索栏

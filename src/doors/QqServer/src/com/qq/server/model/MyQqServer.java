@@ -48,7 +48,6 @@ public class MyQqServer {
 					if (rs.next())// 找到了与之匹配的ID和密码
 					{
 						// 返回一个成功登陆的信息报
-						System.out.println("1");
 						m.setMesType("1");
 						oos.writeObject(m);
 

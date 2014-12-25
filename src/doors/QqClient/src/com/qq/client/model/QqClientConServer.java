@@ -18,7 +18,7 @@ public class QqClientConServer {
 		boolean b=false;
 		try {
 			System.out.println("kk");
-			s=new Socket("127.0.0.1",9999);
+			s=new Socket("127.0.0.1",9999);//192.168.3.148
 			ObjectOutputStream oos=new ObjectOutputStream(s.getOutputStream());//	对象序列化输出，将user序列化之后使用，
 			oos.writeObject(o);  //将对象  o 写入oos序列化流
 			
@@ -26,15 +26,14 @@ public class QqClientConServer {
 			
 			Message ms=(Message)ois.readObject();
 			//这里就是验证用户登录的地方
-			if(ms.getMesType().equals("1"))//标志
+			if(ms.getMesType().equals("1"))//标志，消息的标志
 			{
 				System.out.println("lj");
 				//就创建一个该qq号和服务器端保持通讯连接得线程
 				ClientConServerThread ccst=new ClientConServerThread(s);
 				//启动该通讯线程
 				ccst.start();
-				ManageClientConServerThread.addClientConServerThread
-				(((User)o).getUserId(), ccst);
+				ManageClientConServerThread.addClientConServerThread(((User)o).getUserId(), ccst);//参数为ID和线程名
 			 	b=true;
 			}else{
 				//关闭Scoket
@@ -56,7 +55,7 @@ public class QqClientConServer {
 		boolean b=false;
 		try {
 			System.out.println("注册");
-			Socket s=new Socket("127.0.0.1",9999);
+			Socket s=new Socket("127.0.0.1",9999);//192.168.3.148
 			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());//输出序列化
 			oos.writeObject(o);  //序列化输出的流为  数据o
 			

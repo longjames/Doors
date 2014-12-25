@@ -38,18 +38,18 @@ public class ClientConServerThread extends Thread {
 					QqChat qqChat=ManageQqChat.getQqChat(m.getGetter()+" "+m.getSender());
 					//显示
 					qqChat.showMessage(m);
-				}else if(m.getMesType().equals(MessageType.message_ret_onLineFriend))//返回在线好友的包
-				{
+				}else if(m.getMesType().equals(MessageType.message_ret_onLineFriend))//返回在线好友的包，这个时候得到的可能是你刚登录是向服务器请求的好友包，
+				{                                                                    //也可能是服务器向你发的刚上线的好友的包
 					System.out.println("客户端接收到"+m.getCon());
-					String con=m.getCon();
-					String friends[]=con.split(" ");
+					//String con=m.getCon();//这个时候得到的已经是在线好友
+					//String friends[]=con.split(" ");//以空格分割，
 					String getter=m.getGetter();
 					System.out.println("getter="+getter);
 					//修改相应的好友列表.
 					QqFriendList qqFriendList=ManageQqFriendList.getQqFriendList(getter);
 					
 				//	if(qqFriendList)
-					//更新在线好友.
+					//更新在线好友.如果好友列表非空？？？其实无论空不空都得跟新吧
 					if(qqFriendList!=null)
 					{
 						qqFriendList.upateFriend(m);

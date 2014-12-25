@@ -5,7 +5,7 @@
  */
 package com.qq.server.view;
 
-
+//待优化，关闭服务器的Button还没有做
 import javax.swing.*;
 
 import com.qq.server.model.MyQqServer;
