@@ -7,6 +7,7 @@ import java.io.*;
 import java.net.*;
 
 import com.qq.client.view.QqChat;//聊天界面
+import com.qq.client.view.QqClientLogin;
 import com.qq.client.view.QqFriendList;//好友界面
 import com.qq.common.*;
 public class ClientConServerThread extends Thread {
@@ -46,14 +47,16 @@ public class ClientConServerThread extends Thread {
 					String getter=m.getGetter();
 					System.out.println("getter="+getter);
 					//修改相应的好友列表.
-					QqFriendList qqFriendList=ManageQqFriendList.getQqFriendList(getter);
-					
+					//无法正常调用updateFriend,那就得到getter的线程
+					//QqFriendList qqFriendList=ManageQqFriendList.getQqFriendList(getter);
+					//qqFriendList.updateFriend(m);//???
+					(ManageQqFriendList.getQqFriendList(getter)).updateFriend(m);
 				//	if(qqFriendList)
 					//更新在线好友.如果好友列表非空？？？其实无论空不空都得跟新吧
-					if(qqFriendList!=null)
-					{
-						qqFriendList.upateFriend(m);
-					}
+					//if(qqFriendList!=null)
+					//{
+						//qqFriendList.upateFriend(m);
+					//}
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

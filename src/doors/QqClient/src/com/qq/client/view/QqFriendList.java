@@ -35,15 +35,15 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 		QqFriendList qqFriendList=new QqFriendList("lj");
 	}
 	
-	//更新在线的好友情况
-	public void upateFriend(Message m)
+	//更新在线的好友情况，每次在跟新的时候都刷新一遍？还是？
+	public void updateFriend(Message m)
 	{
 		String onLineFriend[]=m.getCon().split(" ");
 		
 		for(int i=0;i<onLineFriend.length;i++)
 		{
-			
-			jb1s[Integer.parseInt(onLineFriend[i])-1].setEnabled(true);
+			System.out.println("jbls---"+onLineFriend[i]);//可以运行到这，只是没有改变Jlabel中的jbls
+			jb1s[i].setText(onLineFriend[i]);//jb1s[i]=new JLabel(onLineFriend[i]+"",new ImageIcon("image/mm.jpg"),JLabel.LEFT);//将每个在线的好友的名字发送到jbls上//jb1s[Integer.parseInt(onLineFriend[i])-1].setEnabled(true);
 		}
 	}
 	
@@ -75,7 +75,9 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 		
 		for(int i=0;i<jb1s.length;i++)
 		{
-			jb1s[i]=new JLabel(i+1+"",new ImageIcon("image/mm.jpg"),JLabel.LEFT);
+			int in=i+1;
+			String jbls_friendsname =in+"Friend";//转化成String，为了后面的ID，可以设置成字母数字，字符
+			jb1s[i]=new JLabel(jbls_friendsname+"",new ImageIcon("image/mm.jpg"),JLabel.LEFT);
 			jb1s[i].setEnabled(false);
 			if(jb1s[i].getText().equals(ownerId))
 			{
@@ -150,7 +152,7 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 		
 	}
 
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent arg0) {//卡片选项
 		// TODO Auto-generated method stub
 		//如果点击了陌生人按钮，就显示第二张卡片
 		if(arg0.getSource()==jphy_jb2)
@@ -172,7 +174,7 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 		if(arg0.getClickCount()==2)
 		{
 			//得到该好友的编号
-			String friendNo=((JLabel)arg0.getSource()).getText();
+			String friendNo=((JLabel)arg0.getSource()).getText();//得到Jlabel的text
 			//System.out.println("你希望和 "+friendNo+" 聊天");
 			QqChat qqChat=new QqChat(this.owner,friendNo);
 			

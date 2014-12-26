@@ -55,7 +55,7 @@ public class QqClientConServer {
 		boolean b=false;
 		try {
 			System.out.println("注册");
-			Socket s=new Socket("127.0.0.1",9999);//192.168.3.148
+			Socket s=new Socket("127.0.0.1",9999);//192.168.3.148,192.168.199.179
 			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());//输出序列化
 			oos.writeObject(o);  //序列化输出的流为  数据o
 			

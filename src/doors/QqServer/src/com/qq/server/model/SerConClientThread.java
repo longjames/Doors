@@ -66,12 +66,14 @@ public class SerConClientThread  extends Thread{
 					oos.writeObject(m);
 				}else if(m.getMesType().equals(MessageType.message_get_onLineFriend))
 				{
-					System.out.println(m.getSender()+" 要他的好友");
-					//把在服务器的好友给该客户端返回.
+					System.out.println(m.getSender()+" 要他的好友11111");
+					//把在服务器的好友给该客户端返回.但是现在这步有问题
 					String res=ManageClientThread.getAllOnLineUserid();
+					//System.out.println(m.getSender()+" 要他的好友:++++"+res);
 					Message m2=new Message();
 					m2.setMesType(MessageType.message_ret_onLineFriend);
 					m2.setCon(res);
+					
 					m2.setGetter(m.getSender());
 					ObjectOutputStream oos=new ObjectOutputStream(s.getOutputStream());
 					oos.writeObject(m2);

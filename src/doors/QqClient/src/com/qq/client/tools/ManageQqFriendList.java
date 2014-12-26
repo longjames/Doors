@@ -7,6 +7,7 @@ import java.util.*;
 import java.io.*;
 import com.qq.client.view.*;
 public class ManageQqFriendList {
+	QqFriendList qqFriendListname;
 
 	private static HashMap hm=new HashMap<String, QqFriendList>();
 	
@@ -14,8 +15,13 @@ public class ManageQqFriendList {
 		
 		hm.put(qqid, qqFriendList);
 	}
-	
-	public static QqFriendList getQqFriendList(String qqId)//返回qq好友
+	/*public static void setFriendlistname(QqFriendList qqFriendListname){
+		   this.qqFriendListname=qqFriendListname;
+	}
+	public QqFriendList getFriendlistname(){
+		  return this.qqFriendListname;
+	}*/
+	public static QqFriendList getQqFriendList(String qqId)//实例对象
 	{
 		return (QqFriendList)hm.get(qqId);
 	}

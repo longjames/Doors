@@ -4,7 +4,9 @@
 package com.qq.client.view;
 import com.qq.common.*;
 import com.qq.client.tools.*;
+
 import java.io.*;
+
 import javax.swing.*;
 
 import com.qq.client.model.QqClientUser;
@@ -102,7 +104,6 @@ public class QqClientLogin extends JFrame implements ActionListener{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
-
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		//如果用户点击登录
@@ -118,8 +119,9 @@ public class QqClientLogin extends JFrame implements ActionListener{
 			{
 				JOptionPane.showMessageDialog(this,"登录成功");//登录成功会弹出
 				try {
-					//把创建好友列表的语句提前.qqlist为提前做好的好友列表
+					//把创建好友列表的语句提前.qqlist为提前做好的好友列表，将这个窗口加入了一个管理
 					QqFriendList qqList=new QqFriendList(u.getUserId());
+					//setFriendlistname(u.getUserId(), qqList);
 					ManageQqFriendList.addQqFriendList(u.getUserId(), qqList);
 					
 					//发送一个要求返回在线好友的请求包.序列流，通过U的ID得到线程名，并得到其IO流
