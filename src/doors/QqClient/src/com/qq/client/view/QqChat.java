@@ -63,12 +63,15 @@ public class QqChat extends JFrame implements ActionListener{
 			m.setSender(this.ownerId);
 			m.setGetter(this.friendId);
 			m.setCon(jtf.getText());
-			m.setSendTime(new java.util.Date().toString());
+			///m.setSendTime(new java.util.Date().toString());//暂时不在聊天信息中添加时间，暂时没有想好如何处理这个
 			//发送给服务器.
 			try {
 				ObjectOutputStream oos=new ObjectOutputStream
 				(ManageClientConServerThread.getClientConServerThread(ownerId).getS().getOutputStream());
 				oos.writeObject(m);
+				ChattingRecord chat_record =new ChattingRecord();
+				System.out.println("写入聊天记录和发聊天信息");
+				chat_record.WriteRecord(m, this.ownerId, this.friendId);
 			} catch (Exception e) {
 				e.printStackTrace();
 				// TODO: handle exception

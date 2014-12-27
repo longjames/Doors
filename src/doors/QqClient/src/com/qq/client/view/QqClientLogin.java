@@ -64,7 +64,7 @@ public class QqClientLogin extends JFrame implements ActionListener{
 		
 		//把控件按照顺序加入到jp2
 		jp2.add(jp2_jbl1);
-		jp2.add(jp2_jtf);//qq号码
+		jp2.add(jp2_jtf);//qq号码 
 		jp2.add(jp2_jb1);
 		////
 		jp2.add(jp2_jbl2);//qq 密码

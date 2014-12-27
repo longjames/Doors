@@ -35,7 +35,7 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 		QqFriendList qqFriendList=new QqFriendList("lj");
 	}
 	
-	//更新在线的好友情况，每次在跟新的时候都刷新一遍？还是？
+	//更新在线的好友情况，每次在跟新的时候都刷新一遍？还是？,跟新这块还得处理，因为会覆盖原有的在线好友
 	public void updateFriend(Message m)
 	{
 		String onLineFriend[]=m.getCon().split(" ");

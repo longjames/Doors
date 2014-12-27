@@ -36,7 +36,10 @@ public class ClientConServerThread extends Thread {
 				{
 				
 					//把从服务器获得消息，显示到该显示的聊天界面
-					QqChat qqChat=ManageQqChat.getQqChat(m.getGetter()+" "+m.getSender());
+					System.out.println("收到服务器发来的消息");
+					ChattingRecord chat_record =new ChattingRecord();
+					chat_record.WriteRecord(m, m.getGetter(), m.getSender());
+					QqChat qqChat=ManageQqChat.getQqChat(m.getGetter()+" "+m.getSender());//得到那个进程
 					//显示
 					qqChat.showMessage(m);
 				}else if(m.getMesType().equals(MessageType.message_ret_onLineFriend))//返回在线好友的包，这个时候得到的可能是你刚登录是向服务器请求的好友包，
