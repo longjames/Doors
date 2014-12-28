@@ -27,24 +27,52 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 	JPanel jpmsr1,jpmsr2,jpmsr3;
 	JButton jpmsr_jb1,jpmsr_jb2,jpmsr_jb3;
 	JScrollPane jsp2;
-	JLabel []jb1s;
+	JLabel []jbls;
 	//把整个JFrame设置成CardLayout
 	CardLayout cl;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		QqFriendList qqFriendList=new QqFriendList("lj");
 	}
+	//有好友上线时会自动跟新到FriendList
+	/*public void login_call(String FriendId){
+		for (int i=0;i<50;i++){
+			int in=i+1;
+			if (jbls[i].getText()==in+"Friend"){
+				jbls[i].setText(FriendId);
+				i=50;
+			}
+		}
+	}*/
 	
 	//更新在线的好友情况，每次在跟新的时候都刷新一遍？还是？,跟新这块还得处理，因为会覆盖原有的在线好友
 	public void updateFriend(Message m)
 	{
 		String onLineFriend[]=m.getCon().split(" ");
+		 if (onLineFriend.length==1){//如果值为1时，两种情况，1是只有自己上线时，2是有人上线提醒，但是这两种情况都可以用这种解决
+			 for(int j=0;j<50;j++)//找到第一个没有使用的Label
+				{
+					System.out.println("1");//可以运行到这，只是没有改变Jlabel中的jbls
+					int jn=j+1;
+					String f=new String(jn+"Friend");
+				    if(jbls[j].getText().equals(f)){
+					  jbls[j].setText(onLineFriend[0]);//jbls[i]=new JLabel(onLineFriend[i]+"",new ImageIcon("image/mm.jpg"),JLabel.LEFT);//将每个在线的好友的名字发送到jbls上//jbls[Integer.parseInt(onLineFriend[i])-1].setEnabled(true);
+					  jbls[j].setEnabled(true);
+					  System.out.println("jbls---"+onLineFriend[0]);
+					  j=50;
+				    }
+				}
+		 }if(onLineFriend.length>1){//z这种情况就是服务器返回好友列表了，要重新刷新好友列表
+			 System.out.println(">1");
+			 for(int i=0;i<onLineFriend.length;i++){
+				 int in=i+1;
+				 jbls[i].setText(onLineFriend[i]);
+				 jbls[i].setEnabled(true);
+			 }
+			 
+		 }
+		 
 		
-		for(int i=0;i<onLineFriend.length;i++)
-		{
-			System.out.println("jbls---"+onLineFriend[i]);//可以运行到这，只是没有改变Jlabel中的jbls
-			jb1s[i].setText(onLineFriend[i]);//jb1s[i]=new JLabel(onLineFriend[i]+"",new ImageIcon("image/mm.jpg"),JLabel.LEFT);//将每个在线的好友的名字发送到jbls上//jb1s[Integer.parseInt(onLineFriend[i])-1].setEnabled(true);
-		}
 	}
 	
 	public QqFriendList(String ownerId)//用户为ID的在线好友
@@ -71,20 +99,20 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 		jphy2=new JPanel(new GridLayout(50,1,4,4));
 		
 		//给jphy2，初始化50好友.
-		jb1s =new JLabel[50];
+		jbls =new JLabel[50];
 		
-		for(int i=0;i<jb1s.length;i++)
+		for(int i=0;i<jbls.length;i++)
 		{
 			int in=i+1;
 			String jbls_friendsname =in+"Friend";//转化成String，为了后面的ID，可以设置成字母数字，字符
-			jb1s[i]=new JLabel(jbls_friendsname+"",new ImageIcon("image/mm.jpg"),JLabel.LEFT);
-			jb1s[i].setEnabled(false);
-			if(jb1s[i].getText().equals(ownerId))
+			jbls[i]=new JLabel(jbls_friendsname+"",new ImageIcon("image/mm.jpg"),JLabel.LEFT);
+			jbls[i].setEnabled(false);
+			/*if(jbls[i].getText().equals(ownerId))
 			{
-				jb1s[i].setEnabled(true);
-			}
-			jb1s[i].addMouseListener(this);
-			jphy2.add(jb1s[i]);
+				jbls[i].setEnabled(true);
+			}*/
+			jbls[i].addMouseListener(this);
+			jphy2.add(jbls[i]);
 			
 			
 		}
@@ -116,12 +144,12 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 		jpmsr2=new JPanel(new GridLayout(20,1,4,4));
 		
 		//给jphy2，初始化20陌生人.
-		JLabel []jb1s2=new JLabel[20];
+		JLabel []jbls2=new JLabel[20];
 		
-		for(int i=0;i<jb1s2.length;i++)
+		for(int i=0;i<jbls2.length;i++)
 		{
-			jb1s2[i]=new JLabel(i+1+"",new ImageIcon("image/mm.jpg"),JLabel.LEFT);
-			jpmsr2.add(jb1s2[i]);
+			jbls2[i]=new JLabel(i+1+"",new ImageIcon("image/mm.jpg"),JLabel.LEFT);
+			jpmsr2.add(jbls2[i]);
 		}
 		
 		jpmsr3=new JPanel(new GridLayout(2,1));

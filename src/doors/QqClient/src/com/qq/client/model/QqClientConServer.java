@@ -67,6 +67,9 @@ public class QqClientConServer {
 				s.close();
 				
 			}
+			if(ms.getMesType().equals("9")){//×¢²áÊ§°Ü
+				b=false;
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();

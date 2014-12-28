@@ -7,6 +7,7 @@ import java.util.*;
 import java.net.*;
 import java.io.*;
 import com.qq.common.*;
+import com.qq.server.db.ServerChattingRecord;
 public class SerConClientThread  extends Thread{
 
 	Socket s;
@@ -59,6 +60,10 @@ public class SerConClientThread  extends Thread{
 				//对从客户端取得的消息进行类型判断，然后做相应的处理
 				if(m.getMesType().equals(MessageType.message_comm_mes))
 				{
+					//先写进文件中,getter和sendder都要写进去
+					ServerChattingRecord scr =new ServerChattingRecord();
+					scr.WriteRecord(m, m.getGetter(), m.getSender());
+					scr.WriteRecord(m, m.getSender(), m.getGetter());
 					//一会完成转发.
 					//取得接收人的通信线程
 					SerConClientThread sc=ManageClientThread.getClientThread(m.getGetter());

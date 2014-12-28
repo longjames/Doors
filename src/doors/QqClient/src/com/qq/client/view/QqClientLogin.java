@@ -14,7 +14,7 @@ import com.qq.common.User;
 
 import java.awt.*;
 import java.awt.event.*;
-public class QqClientLogin extends JFrame implements ActionListener{
+public class QqClientLogin extends JFrame implements ActionListener,FocusListener{
 
 	//定义北部需要的组件
 	
@@ -23,11 +23,11 @@ public class QqClientLogin extends JFrame implements ActionListener{
 	
 	JTabbedPane jtp;//.中部有三个JPanel,有一个叫选项卡窗口管理
 	JPanel jp2,jp3,jp4;
-	JLabel jp2_jbl1,jp2_jbl2,jp2_jbl3,jp2_jbl4;
-	JButton jp2_jb1;
+	JLabel jp2_jbl1,jp2_jbl2;//,jp2_jbl4,jp2_jbl3
+	//JButton jp2_jb1;
 	JTextField jp2_jtf;//qq haoma
 	JPasswordField jp2_jpf;//mima
-	JCheckBox jp2_jcb1,jp2_jcb2;
+	JCheckBox jp2_jcb2;//jp2_jcb1,
 	
 	
 	
@@ -49,31 +49,32 @@ public class QqClientLogin extends JFrame implements ActionListener{
 		
 	
 		//处理中部
-		jp2=new JPanel(new GridLayout(3,3));//3X3
+		jp2=new JPanel(new GridLayout(3,2));//3X2
 		
 		jp2_jbl1=new JLabel("Doors号码",JLabel.CENTER);
+		jp2_jbl1.addFocusListener(this);//如果获得焦点，下拉出最近几个账号，离开焦点查询是否曾经记住密码
 		jp2_jbl2=new JLabel("Doors密码",JLabel.CENTER);
-		jp2_jbl3=new JLabel("忘记密码",JLabel.CENTER);
-		jp2_jbl3.setForeground(Color.blue);//设置颜色
-		jp2_jbl4=new JLabel("申请密码保护",JLabel.CENTER);
-		jp2_jb1=new JButton(new ImageIcon("image/clear.gif"));
+		//jp2_jbl3=new JLabel("忘记密码",JLabel.CENTER);
+		//jp2_jbl3.setForeground(Color.blue);//设置颜色
+		//jp2_jbl4=new JLabel("申请密码保护",JLabel.CENTER);
+		//jp2_jb1=new JButton(new ImageIcon("image/clear.gif"));
 		jp2_jtf=new JTextField();
 		jp2_jpf=new JPasswordField();
-		jp2_jcb1=new JCheckBox("隐身登录");
+		//jp2_jcb1=new JCheckBox("隐身登录");
 		jp2_jcb2=new JCheckBox("记住密码");
 		
 		//把控件按照顺序加入到jp2
 		jp2.add(jp2_jbl1);
 		jp2.add(jp2_jtf);//qq号码 
-		jp2.add(jp2_jb1);
+		//jp2.add(jp2_jb1);
 		////
 		jp2.add(jp2_jbl2);//qq 密码
 		jp2.add(jp2_jpf);
-		jp2.add(jp2_jbl3);
+		//jp2.add(jp2_jbl3);
 		////
-		jp2.add(jp2_jcb1);//选项
+		//jp2.add(jp2_jcb1);//选项
 		jp2.add(jp2_jcb2);
-		jp2.add(jp2_jbl4);
+		//jp2.add(jp2_jbl4);
 		//创建选项卡窗口
 		jtp=new JTabbedPane();//将3个选项卡加入
 		jtp.add("Doors号码",jp2);
@@ -117,13 +118,17 @@ public class QqClientLogin extends JFrame implements ActionListener{
 			
 			if(qqClientUser.checkUser(u))
 			{
+				//如果点击了记住密码，写入某个文件夹
+				if(jp2_jcb2.isSelected()){
+					
+				}
 				JOptionPane.showMessageDialog(this,"登录成功");//登录成功会弹出
 				try {
 					//把创建好友列表的语句提前.qqlist为提前做好的好友列表，将这个窗口加入了一个管理
 					QqFriendList qqList=new QqFriendList(u.getUserId());
 					//setFriendlistname(u.getUserId(), qqList);
 					ManageQqFriendList.addQqFriendList(u.getUserId(), qqList);
-					
+
 					//发送一个要求返回在线好友的请求包.序列流，通过U的ID得到线程名，并得到其IO流
 					ObjectOutputStream oos=new ObjectOutputStream
 					(ManageClientConServerThread.getClientConServerThread(u.getUserId()).getS().getOutputStream());
@@ -149,8 +154,24 @@ public class QqClientLogin extends JFrame implements ActionListener{
 		//如果用户点击注册
 		if (arg0.getSource()==jp1_jb3)
 		{
+			this.dispose();
 			SignUp signup = new SignUp();
+			
 		}
+	}
+
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

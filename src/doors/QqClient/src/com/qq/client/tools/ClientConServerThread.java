@@ -39,9 +39,14 @@ public class ClientConServerThread extends Thread {
 					System.out.println("收到服务器发来的消息");
 					ChattingRecord chat_record =new ChattingRecord();
 					chat_record.WriteRecord(m, m.getGetter(), m.getSender());
-					QqChat qqChat=ManageQqChat.getQqChat(m.getGetter()+" "+m.getSender());//得到那个进程
-					//显示
+					try{
+					QqChat qqChat=ManageQqChat.getQqChat(m.getGetter()+" "+m.getSender());//得到那个进程,但是如果这个线程不存在呢？
+					//显示                                                                                                                                                                                                                                    //也就是说聊天框不存在的时候,这时可以选择弹出一个新的聊天框，也可以？
 					qqChat.showMessage(m);
+					}catch(Exception e){
+						QqChat qqChat= new QqChat(m.getGetter(),m.getSender());
+						ManageQqChat.addQqChat(m.getGetter()+" "+m.getSender(), qqChat);
+					}
 				}else if(m.getMesType().equals(MessageType.message_ret_onLineFriend))//返回在线好友的包，这个时候得到的可能是你刚登录是向服务器请求的好友包，
 				{                                                                    //也可能是服务器向你发的刚上线的好友的包
 					System.out.println("客户端接收到"+m.getCon());
@@ -51,7 +56,7 @@ public class ClientConServerThread extends Thread {
 					System.out.println("getter="+getter);
 					//修改相应的好友列表.
 					//无法正常调用updateFriend,那就得到getter的线程
-					//QqFriendList qqFriendList=ManageQqFriendList.getQqFriendList(getter);
+					//QqFriendList qqFriendList=ManageQ qFriendList.getQqFriendList(getter);
 					//qqFriendList.updateFriend(m);//???
 					(ManageQqFriendList.getQqFriendList(getter)).updateFriend(m);
 				//	if(qqFriendList)

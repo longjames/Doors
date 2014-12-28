@@ -96,11 +96,13 @@ public class SignUp  extends JFrame implements ActionListener{
 			//System.out.println("signup sucecced?"+ u.getUserId() + u.getPasswd());
     		if (qqClientUser.checkSignup(u)){//
     			System.out.println("signup sucecced");
-    			
+    			this.dispose();
     			QqClientLogin qqClientLogin=new QqClientLogin();
     		}
     		else{
     			//此处最好可以弹出一个窗口，重新注册
+    			JOptionPane.showMessageDialog(this,"注册失败,重新注册！！");
+    			this.dispose();
     			SignUp signup = new SignUp();
     		}
     		
