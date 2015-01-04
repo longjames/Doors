@@ -10,12 +10,28 @@ public class ChattingRecord {
 	    private Message m;
 	    private String owner;
 	    private String friendID;
+	    
 	    public static void  WriteHistoryId(String idname){//将id跟新,有新ID输入时就跟新，而且最多只保存5个,
-	    	String idstr=idname;
-	        String []idn= idstr.split(" ",5);//按空格分隔
+	    	String idnew=idname;
+	    	
+	        String []idn= ReadHistroyId();//以往的id
+	        boolean flag =true;
+	        for (int j=0;j<idn.length;j++){
+	        	if (idn[j].equals(idnew)){
+	        		for (int n=j;n>0;n--){
+	        			idn[n]=idn[n-1];
+	        		}
+	        		idn[0]=idnew;
+	        		flag=false;
+	        	}
+	        	}
+	        
 	        String id="";
 	        for(int i=0;i<idn.length;i++){
-	        	  id = id +idn[i]+"\n";
+	        	  id = id +idn[i]+" ";
+	        }
+	        if (flag){
+	        	id = idnew+" "+id;
 	        }
 	        File owner_file = new File ("F://Doors");//文件要一级一级的建立
 			File history_file= new File("F://Doors//"+"DoorsHistoryId.txt");
@@ -28,7 +44,8 @@ public class ChattingRecord {
 					history_file.createNewFile();
 				}
 				FileOutputStream fos = new FileOutputStream(history_file);
-				fos.write((id).getBytes("GBK"));
+				fos.write((id+"\r\n").getBytes("GBK"));
+				fos.close();
 			}catch(Exception e){
 				e.printStackTrace();
 			}
@@ -38,7 +55,7 @@ public class ChattingRecord {
 	    
 	    //////
 	    public static String[] ReadHistroyId(){
-	    	String [] id={"1","2","3","4","5"};
+	    	String []id=null;//String [] id={"1","2","3","4","5"};
 	    	File owner_file = new File ("F://Doors");//文件要一级一级的建立
 			File history_file= new File("F://Doors//"+"DoorsHistoryId.txt");
 			try{
@@ -53,9 +70,9 @@ public class ChattingRecord {
 			FileReader fileReader= new FileReader(history_file);
 			BufferedReader bufferedReader=new  BufferedReader(fileReader);
 			String read = null;
-			String ids =null;
+			String ids ="";
 		    while((read=bufferedReader.readLine())!=null){  //读消息,用空格分开
-		     ids=ids + " "+read;
+		     ids=ids+read+" ";
 		    }
 		    if(ids!=null){
 		    id = ids.split(" ");
@@ -138,7 +155,7 @@ public class ChattingRecord {
 				//但是如果别人修改了密码怎么办，那也没法了，但是如果//之前点击过忘记密码之后又没有点击的话，没有点击记住密码的迹象往这个文件，并删除其数据
 				//但是如果数据已经保存过数据，又保存貌似不好，这得改？？？？？？？？？？？？
 				FileOutputStream fos = new FileOutputStream(record_file,true);
-				fos.write((id+" "+password).getBytes("GBK"));
+				fos.write((id+" "+password+"\r\n").getBytes("GBK"));
 				fos.close();
 			}catch(Exception e){                                              
 				e.printStackTrace();
@@ -190,8 +207,9 @@ public class ChattingRecord {
 		    BufferedReader bufferedReader=null; 
 			//String url1 = "F:\\Doors\\"+owner;
 			//String url2 = "F:\\Doors\\"+owner+"/"friendID+".txt";
-			File owner_file = new File ("F:\\Doors\\"+owner);
-			File record_file = new File ("F:\\Doors\\"+owner+"/"+friendID+".txt");
+		    File owner_file = new File ("F://Doors");//文件要一级一级的建立
+			File owner_file_file = new File ("F://Doors//"+owner);
+			File record_file = new File ("F://Doors//"+owner+"/"+friendID+".txt");
 			try{
 				if (!owner_file.exists()){
 					owner_file.mkdir();

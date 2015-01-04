@@ -127,7 +127,7 @@ public class QqClientLogin extends JFrame implements ItemListener, ActionListene
 			if(qqClientUser.checkUser(u))
 			{
 				//如果点击了记住密码，写入某个文件夹,这里待会再写,账号要记住吧
-			//	ChattingRecord.WriteHistoryId(u.getUserId());
+				ChattingRecord.WriteHistoryId(u.getUserId());
 				if(jp2_jcb2.isSelected()){
 					ChattingRecord.WritePassword(u.getUserId(),u.getPasswd());
 				}
